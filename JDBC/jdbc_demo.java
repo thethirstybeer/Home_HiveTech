@@ -40,8 +40,7 @@ public class jdbc_demo {
     private static void No2() throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement("""
                 SELECT * FROM orders;
-                                
-                """)) {
+            """)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 boolean empty = true;
                 while (resultSet.next()) {
@@ -65,9 +64,7 @@ public class jdbc_demo {
                         count++;
                     }
                 }
-
             }
-
         }
     }
 
@@ -75,8 +72,7 @@ public class jdbc_demo {
     private static void No3() throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement("""
                 SELECT * FROM employees;
-                        
-                """)) {
+            """)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 boolean empty = true;
                 while (resultSet.next()) {
@@ -112,7 +108,7 @@ public class jdbc_demo {
     private static void No6() throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement("""
                 SELECT COUNT(employees.employeeNumber) FROM employees;
-                """)) {
+             """)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     System.out.println("Numbers Employee: " + resultSet.getInt(1));
@@ -127,7 +123,7 @@ public class jdbc_demo {
         try (PreparedStatement statement = connection.prepareStatement("""
                 SELECT * FROM orders
                 WHERE orders.orderDate >= "2003-11-01" and orders.orderDate <= "2003-11-30";
-                """)) {
+             """)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 boolean empty = true;
                 while (resultSet.next()) {
@@ -163,7 +159,7 @@ public class jdbc_demo {
         try (PreparedStatement statement = connection.prepareStatement("""
                 INSERT INTO employees(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                """)) {
+             """)) {
             int rowInserted = 0;
             for (Employee e : employees) {
                 statement.setInt(1, e.getEmployeeNumber());
@@ -178,8 +174,6 @@ public class jdbc_demo {
                 rowInserted += statement.executeUpdate();
             }
             System.out.println("Row inserted: " + rowInserted);
-
-
         }
     }
 
@@ -191,7 +185,7 @@ public class jdbc_demo {
         try (PreparedStatement statement = connection.prepareStatement("""
                 INSERT INTO offices(officeCode, city, phone, addressLine1, addressLine2, state, country, postalCode, territory)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
-                """)) {
+            """)) {
             int rowInserted = 0;
             for (Offices o : offices) {
                 statement.setString(1, o.getOfficeCode());
@@ -216,7 +210,7 @@ public class jdbc_demo {
                     UPDATE offices
                     SET addressLine2 = ?
                     WHERE officeCode = ?;
-                """)) {
+            """)) {
             statement.setString(1, address);
             statement.setInt(2, officeCode);
             int rowsUpdated = statement.executeUpdate();
@@ -230,7 +224,7 @@ public class jdbc_demo {
                 UPDATE customers
                 SET addressLine2 = addressLine1
                 WHERE addressLine2 IS NULL;
-                """)) {
+            """)) {
             int rowsUpdated = statement.executeUpdate();
             System.out.println("Rows updated: " + rowsUpdated);
         }
@@ -245,7 +239,7 @@ public class jdbc_demo {
         try (PreparedStatement statement = connection.prepareStatement("""
                 INSERT INTO products(productCode, productName, productLine, productScale, productVendor, productDescription, quantityInStock, buyPrice, MSRP)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """)) {
+             """)) {
             int rowInserted = 0;
             for (Products p : products) {
                 statement.setString(1, p.getProductCode());
@@ -261,7 +255,6 @@ public class jdbc_demo {
                 rowInserted += statement.executeUpdate();
             }
             System.out.println("Row inserted: " + rowInserted);
-
         }
     }
 
@@ -271,7 +264,7 @@ public class jdbc_demo {
                 DELETE c FROM customers c
                 LEFT JOIN orders o using(customerNumber)
                 WHERE o.customerNumber IS NULL;        
-                """)) {
+             """)) {
             int rowsDeleted = statement.executeUpdate();
             System.out.println("Rows deleted: " + rowsDeleted);
         }
@@ -282,10 +275,10 @@ public class jdbc_demo {
         orders.removeAll(orders);
         orderdetails.removeAll(orderdetails);
         try(PreparedStatement statement = connection.prepareStatement("""
-        select o.*, o2.*  from customers c
-        left join orders o on c.customerNumber = o.customerNumber
-        left join orderdetails o2 on o.orderNumber = o2.orderNumber;
-        """)){
+                select o.*, o2.*  from customers c
+                left join orders o on c.customerNumber = o.customerNumber
+                left join orderdetails o2 on o.orderNumber = o2.orderNumber;
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 Orders o;
@@ -334,7 +327,7 @@ public class jdbc_demo {
                 group by p.customerNumber
                 order by count(p.customerNumber) desc
                 limit 1;
-                """)) {
+             """)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 boolean empty = true;
                 Customers cus;
@@ -376,12 +369,12 @@ public class jdbc_demo {
     private static void No26() throws SQLException{
         customers.removeAll(customers);
         try(PreparedStatement statement = connection.prepareStatement("""
-            select c.* , Sum(p.amount)  from customers c
-            inner join payments p on c.customerNumber = p.customerNumber
-            group by c.customerNumber
-            order by Sum(p.amount)
-            limit 3;
-        """)){
+                select c.* , Sum(p.amount)  from customers c
+                inner join payments p on c.customerNumber = p.customerNumber
+                group by c.customerNumber
+                order by Sum(p.amount)
+                limit 3;
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 Customers cus;
@@ -423,12 +416,12 @@ public class jdbc_demo {
     private static void No27() throws SQLException{
         customers.removeAll(customers);
         try(PreparedStatement statement = connection.prepareStatement("""
-            select c.*, count(p.customerNumber) from customers c
-            inner join payments p ON c.customerNumber = p.customerNumber
-            group by p.customerNumber
-            order by count(p.customerNumber) desc
-            limit 5;
-        """)){
+                select c.*, count(p.customerNumber) from customers c
+                inner join payments p ON c.customerNumber = p.customerNumber
+                group by p.customerNumber
+                order by count(p.customerNumber) desc
+                limit 5;
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 Customers cus;
@@ -470,10 +463,10 @@ public class jdbc_demo {
     private static void No28() throws SQLException{
         orders.removeAll(orders);
         try(PreparedStatement statement = connection.prepareStatement("""
-            select * from orders o
-            where (o.shippedDate >= "2003-04-01" and o.shippedDate <= "2003-04-30") or
-            	  (o.shippedDate >="2003-12-01" and o.shippedDate <= "2003-12-30");
-        """)){
+                select * from orders o
+                where (o.shippedDate >= "2003-04-01" and o.shippedDate <= "2003-04-30") or
+                      (o.shippedDate >="2003-12-01" and o.shippedDate <= "2003-12-30");
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 Orders o;
@@ -507,13 +500,13 @@ public class jdbc_demo {
     private static void No29() throws SQLException{
         offices.removeAll(offices);
         try(PreparedStatement statement = connection.prepareStatement("""
-            select o.*, count(c.salesRepEmployeeNumber) as countCustomer  from offices o
-            inner join employees e on o.officeCode = e.officeCode
-            inner join customers c on e.employeeNumber = c.salesRepEmployeeNumber\s
-            group by o.officeCode
-            order by count(c.salesRepEmployeeNumber) desc
-            limit 1;
-        """)){
+                select o.*, count(c.salesRepEmployeeNumber) as countCustomer  from offices o
+                inner join employees e on o.officeCode = e.officeCode
+                inner join customers c on e.employeeNumber = c.salesRepEmployeeNumber\s
+                group by o.officeCode
+                order by count(c.salesRepEmployeeNumber) desc
+                limit 1;
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 ArrayList<Integer> countEmployee = new ArrayList<>();
@@ -551,10 +544,10 @@ public class jdbc_demo {
     private static void No30() throws SQLException{
         customers.removeAll(customers);
         try(PreparedStatement statement = connection.prepareStatement("""
-        select c.*  from customers c
-        where c.creditLimit < 20000
-        limit 2;
-        """)){
+                select c.*  from customers c
+                where c.creditLimit < 20000
+                limit 2;
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 Customers cus;
@@ -594,10 +587,10 @@ public class jdbc_demo {
     private static void No31() throws SQLException{
         products.removeAll(products);
         try(PreparedStatement statement = connection.prepareStatement("""
-        select p.*  from products p
-        order by p.quantityInStock desc
-        limit 2;
-        """)){
+                select p.*  from products p
+                order by p.quantityInStock desc
+                limit 2;
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 Products pro;
@@ -633,12 +626,12 @@ public class jdbc_demo {
     private static void No32() throws SQLException{
         products.removeAll(products);
         try(PreparedStatement statement = connection.prepareStatement("""
-            select p.* , count(o.productCode)  from products p
-            inner join orderdetails o on p.productCode = o.productCode
-            group by p.productCode
-            order by p.buyPrice  , count(o.productCode  ) desc
-            limit 10;
-        """)){
+                select p.* , count(o.productCode)  from products p
+                inner join orderdetails o on p.productCode = o.productCode
+                group by p.productCode
+                order by p.buyPrice  , count(o.productCode  ) desc
+                limit 10;
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 Products pro;
@@ -676,14 +669,14 @@ public class jdbc_demo {
     private static void No33() throws SQLException{
         products.removeAll(products);
         try(PreparedStatement statement = connection.prepareStatement("""
-            select p.*, count(o2.status)  from products p
-            inner join orderdetails o on p.productCode = o.productCode
-            inner join orders o2 on o.orderNumber = o2.orderNumber
-            where o2.status = "Cancelled"
-            group by p.productCode
-            order by count(o2.status ) desc
-            limit 5;
-        """)){
+                select p.*, count(o2.status)  from products p
+                inner join orderdetails o on p.productCode = o.productCode
+                inner join orders o2 on o.orderNumber = o2.orderNumber
+                where o2.status = "Cancelled"
+                group by p.productCode
+                order by count(o2.status ) desc
+                limit 5;
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 Products pro;
@@ -720,12 +713,12 @@ public class jdbc_demo {
     private static void No34() throws SQLException{
         products.removeAll(products);
         try(PreparedStatement statement = connection.prepareStatement("""
-           select p.*, o2.shippedDate  from products p
-           inner join orderdetails o on p.productCode = o.productCode
-           inner join orders o2 on o.orderNumber = o2.orderNumber
-           where o2.shippedDate >= "2004-01-01" and o2.shippedDate <= "2004-12-30"
-           limit 5;
-        """)){
+               select p.*, o2.shippedDate  from products p
+               inner join orderdetails o on p.productCode = o.productCode
+               inner join orders o2 on o.orderNumber = o2.orderNumber
+               where o2.shippedDate >= "2004-01-01" and o2.shippedDate <= "2004-12-30"
+               limit 5;
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 Products pro;
@@ -762,11 +755,11 @@ public class jdbc_demo {
     private static void No35() throws SQLException{
         customers.removeAll(customers);
         try(PreparedStatement statement = connection.prepareStatement("""
-            select c.*, sum(p.amount) from customers c
-            inner join payments p on c.customerNumber = p.customerNumber
-            where p.paymentDate between "2004-01-01" and "2004-12-31"
-            group by c.customerNumber  ;
-        """)){
+                select c.*, sum(p.amount) from customers c
+                inner join payments p on c.customerNumber = p.customerNumber
+                where p.paymentDate between "2004-01-01" and "2004-12-31"
+                group by c.customerNumber  ;
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 Customers cus;
@@ -807,12 +800,12 @@ public class jdbc_demo {
     private static void No36() throws SQLException{
         employees.removeAll(employees);
         try(PreparedStatement statement = connection.prepareStatement("""
-            select e.* , count(e.employeeNumber) from employees e
-            inner join employees e2 on e.employeeNumber = e2.reportsTo
-            group by e.employeeNumber
-            order by count(e.employeeNumber) desc
-            limit 2;
-        """)){
+                select e.* , count(e.employeeNumber) from employees e
+                inner join employees e2 on e.employeeNumber = e2.reportsTo
+                group by e.employeeNumber
+                order by count(e.employeeNumber) desc
+                limit 2;
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 Employee emp;
@@ -848,12 +841,12 @@ public class jdbc_demo {
     private static void No37() throws SQLException{
         products.removeAll(products);
         try(PreparedStatement statement = connection.prepareStatement("""
-            select p.* from products p
-            left join orderdetails o using (productCode)
-            left join orders o2 using (orderNumber)
-            where o2.orderDate not between "2005-01-1" and "2005-12-31"
-            limit 2;
-        """)){
+                select p.* from products p
+                left join orderdetails o using (productCode)
+                left join orders o2 using (orderNumber)
+                where o2.orderDate not between "2005-01-1" and "2005-12-31"
+                limit 2;
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 Products pro;
@@ -889,10 +882,10 @@ public class jdbc_demo {
     private static void No38() throws SQLException{
         orders.removeAll(orders);
         try(PreparedStatement statement = connection.prepareStatement("""
-        select o.* from orders o
-        where date_sub(o.shippedDate, interval 3 day) = o.orderDate
-        limit 10;
-        """)){
+                select o.* from orders o
+                where date_sub(o.shippedDate, interval 3 day) = o.orderDate
+                limit 10;
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 Orders ord;
@@ -926,10 +919,10 @@ public class jdbc_demo {
     private static void No39() throws SQLException{
         orders.removeAll(orders);
         try(PreparedStatement statement = connection.prepareStatement("""
-        select *  from orders o
-        where o.shippedDate  >= "2004-12-01" and o.shippedDate <= "2004-12-30" and o.status = "Shipped"
-        limit 10;
-        """)){
+                select *  from orders o
+                where o.shippedDate  >= "2004-12-01" and o.shippedDate <= "2004-12-30" and o.status = "Shipped"
+                limit 10;
+            """)){
             try(ResultSet resultSet = statement.executeQuery()){
                 boolean empty = true;
                 Orders ord;
