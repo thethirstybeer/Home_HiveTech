@@ -1,0 +1,14 @@
+* Access Modifiers
+    - Default(Công cụ sửa đổi quyền truy cập mặc định)
+        + Khi không có công cụ sửa đổi truy cập nào được chỉ định cho một lớp, phương thức hoặc thành viên dữ liệu cụ thể, sẽ được đặt mặc định là "Default".
+        + Chỉ có thể truy cập được trong một "Package" tương ứng và các lớp từ gói khác không thể truy cập được vào gói này.
+    - Public(Công cụ sửa đổi quyền truy cập công cộng)
+        + Công cụ sửa đổi truy cập công cộng có phạm vi rộng nhất trong số tất cả các công cụ sửa đổi truy cập khác.
+        + Các lớp , phương thức hoặc thành viên dữ liệu được khai báo là công khai có thể truy cập ở mọi nơi trong chương trình. Không có giới hạn về phạm vi của các thành viên dữ liệu công cộng.
+    - Private(Công cụ sửa đổi quyền truy cập riêng tư)
+        + Các phương thức hoặc thành viên dữ liệu được khai báo là riêng tư chỉ có thể truy cập được trong lớp mà chúng được khai báo.
+        + Nếu một lớp có được xây dựng riêng tư (nghĩa là thiết lập Private Access Modifier cho class đó) thì bạn không thể tạo đối tượng của lớp đó từ bên ngoài lớp.
+        + Các lớp không thể được đánh dấu bằng công cụ sửa đổi truy cập riêng tư.
+    - Protected(Bảo vệ truy cập sửa đổi)
+        + Các phương thức hoặc thành viên dữ liệu được khai báo là 'được bảo vệ' có thể truy cập được trong cùng một gói hoặc các lớp con trong một gói khác nhau.
+        + Các thành viên được bảo vệ chỉ có thể được truy cập ở lớp con hoặc các lớp dẫn xuất.

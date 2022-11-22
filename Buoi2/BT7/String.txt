@@ -1,0 +1,23 @@
+String - String Builder - String Buffer
+
+* String:
+    - Là một đối tượng đại diện cho một chuỗi các ký tự.
+* String Builder:
+    - Được sử dụng để tạo chuỗi có thể thay đổi.
+    - Cách khởi tạo:
+        + StringBuilder stringBuilder = new StringBuilder() // khởi tạo một StringBuilder trống với dung lượng bđ bằng 16
+        + StringBuilder stringBuilder = new StringBuilder(String) // khởi tạo một StringBuilder với chuỗi được truyền.
+        + StringBuilder stringBuilder = new StringBuilder(int length) // khởi tạo một StringBuilder với dung lượng bằng tham số được truyền vào.
+    - Các phương thức:
+        + append(String s):  nối 2 chuỗi. //s1.append(s2)
+        + insert(int offset, String s)
+        + replace(int sIndex, eIndex, String s)
+        + delete(int sIndex, eIndex)
+        + reverse()
+        + capacity()
+        + substring(int sIndex, int eIndex)
+* String Buffer:
+    - Tương tự như String Builder
+* So sánh:
+    - Buffer chậm hơn so với Builder
+    - Buffer được đồng bộ hóa, không thể gọi các phương thức của Buffer cùng một lúc. Builder thì ngược lại
